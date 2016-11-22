@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<DDL version="1.21">
+<Sensor>
+<!-- General information of the device -->
+<Description>
+<!-- Name of the device -->
+<Name>Temperature Sensor </Name>
+<!-- Type of Device (Physical(Singleton) or Virtual) -->
+<Device_Type>Physical</Device_Type>
+<!-- Description of the device -->
+<Verbose_Description>
+TMP36 Analog Temperature Sensor
+</Verbose_Description>
+<!-- Device vendor -->
+<Vendor>University of Florida </Vendor>
+<!-- Device version -->
+<Version>1.0 </Version>
+<Physical>
+<!-- Dimensions of the device -->
+<Dimensions>
+<!-- Length in mm, left blank if unknown -->
+<Length>24</Length>
+<!-- Width in mm, left blank if unknown -->
+<Width>34</Width>
+<!-- Height in mm, left blank if unknown -->
+<Height>24</Height>
+</Dimensions>
+<!-- Permissible environment for operation -->
+<Operating_environment>
+<!-- Permissible temperature range for operation -->
+<Temperature>
+<Range>
+<!-- left blank if unknown -->
+<Min></Min>
+<!-- left blank if unknown -->
+<Max></Max>
+</Range>
+</Temperature>
+<!-- Permissible humidity range for operation -->
+<Humidity>
+<Range>
+<!-- left blank if unknown -->
+<Min></Min>
+<!-- left blank if unknown -->
+<Max></Max>
+</Range>
+</Humidity>
+</Operating_environment>
+</Physical>
+</Description>
+<!-- Interfaces of a device-->
+<Interface>
+<!-- To avoid confusion, ensure Signal id is always alpha-numeric instead of numeric -->
+<Signal id="s1">
+<!-- Value of Operation attribute can be Input or Output -->
+<Operation>Input</Operation>
+<!-- A Signal Type can be: Analog or Digital or Protocol or Logical
+Analog/Digital is a low level collection of pins
+Protocol is a high level interface to a device which has an
+in-built communication protocol (example: AnD Blood Pressure Monitor)
+Logical is high-level device service.
+-->
+<Type>Analog</Type>
+<!-- Value of Measurement attribute can be: ADC, Digital or a string whose value
+is equal to the Reading->Measurement attribute of another physical/virtual sensor
+-->
+<Measurement>ADC</Measurement>
+<Unit>null</Unit>
+<!-- Number can be Single or Multiple (many signal inputs of same type) -->
+<Number>Single</Number>
+<Range>
+<!-- leave blank if you don‟t know -->
+<Min>0</Min>
+<!-- leave blank if you don‟t know -->
+<Max>1023</Max>
+</Range>
+</Signal>
+<Reading>
+<!-- Type can be: Basic(Virtual Sensor), Derived(Virtual Sensor),
+Physical (Singleton Sensor)
+-->
+<Type>Physical</Type>
+<Measurement>Temperature</Measurement>
+<Unit>Centigrade</Unit>
+<Computation>
+<!-- Possible value of the Type attribute can be: Aggregate, Formula or Map -->
+<Type>Formula</Type>
+<!-- Possible valid Expression attribute values can be:
+For Type=‟Aggregate‟: Mean, Median, Mode, Max, Min, Sum
+For Type=‟Formula‟: <numerical expression as function of signal ids>
+For Type=‟Map‟: <map of signal ids to range of output values>
+-->
+<!-- The formula function conforms to Java syntax -->
+<Expression>
+reading = (((s1/1023)*3.3)-0.5)*(1000/10)
+</Expression>
+<!--Range can be calculated automatically -->
+<Range>
+<Min></Min>
+<Max></Max>
+</Range>
+</Computation>
+</Reading>
+</Interface>
+</Sensor>
+</DDL >
