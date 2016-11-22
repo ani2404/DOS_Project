@@ -49,6 +49,7 @@ public class Xmlreader {
 		// get node name and value
 		System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");
 		System.out.println("Node Value =" + tempNode.getTextContent());
+System.out.println("test");
     
 
 		if (tempNode.hasAttributes()) {
