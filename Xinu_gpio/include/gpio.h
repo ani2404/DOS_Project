@@ -18,6 +18,8 @@
 #define CONTROL_MODULE 0x44E10000
 #define GPI01_12        0x830
 #define GPI01_12        0x830
+#define 
+
 
 
 #define	am335x_padctl(addr,val)	(*((uint32 *)(addr))) = (val)
