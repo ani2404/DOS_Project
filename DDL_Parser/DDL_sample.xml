@@ -1,0 +1,129 @@
+<DDL>
+	<Platform type ='beagleboard' id='1'>
+		<Device type='Physical' name='LightDetector' id=''>
+			 <Properties>
+			 	<Signal type='analog' mode='input' name='photoresistor'>
+			 		<Pin></Pin>
+			 	</Signal>
+			 </Properties>
+			 <Interface>
+			 	<Topic name='voltreading' id='' subscribe='app'>
+			 		<Trigger>
+			 		</Trigger>
+			 		<Action type='int'>
+			 			<output = photoresistor*1.08/>
+			 		</Action>
+			 	</Topic>
+			 	<Topic name='detectbrightlight' id='' subscribe='app'>
+			 		<Trigger>
+			 			<photoresistor greater than 5 />
+			 		</Trigger>
+			 		<Action type='bool'>
+			 			<output = true/>
+			 		</Action>
+			 	</Topic>
+			 </Interface>
+		</Device>
+
+
+		<Device type='Physical' name='TemperatureDetector' id=''>
+			 <Properties>
+			 	<Signal type='analog' mode='input' name='temperaturesensor'>
+			 		<Pin></Pin>
+			 	</Signal>
+			 </Properties>
+			 <Interface>
+			 	<Topic name='centrigrade' id='' subscribe='app'>
+			 		<Trigger>
+			 		</Trigger>
+			 		<Action type='int'>
+			 			<output = temperaturesensor*1.08/>
+			 		</Action>
+			 	</Topic>
+			 	<Topic name='detecthightemp' id='' subscribe='app'>
+			 		<Trigger>
+			 			<condition1>temperaturesensor*1.08 greater than 50 centrigrades </condition1>
+			 		</Trigger>
+			 		<Action type='bool'>
+			 			<output = true/>
+			 		</Action>
+			 	</Topic>
+			 </Interface>
+		</Device>
+
+		<Device type='Physical' name='WarningIndication' id=''>
+			 <Properties>
+			 	<Signal type='digital' mode='output' name='redled'>
+			 		<Pin></Pin>
+			 	</Signal>
+			 	<Signal type='digital' mode='output' name='blueled'>
+			 		<Pin></Pin>
+			 	</Signal>
+				<Signal type='digital' mode='output' name='greenled'>
+			 		<Pin></Pin>
+			 	</Signal>
+			 </Properties>
+			 <Interface>
+			 	<Topic name='default' id='' subscribe='device'>
+			 		<Trigger>
+			 		</Trigger>
+			 		<Action type='bool[3]'>
+			 			<a1>redled = bool[0]<a1/>
+			 			<a2>greenled = bool[1]<a2/>
+			 			<a3>blueled = bool[2] <a3/>
+			 		</Action>
+			 	</Topic>
+			 	<Topic name='alert' id='' subscribe='device'>
+			 		<Trigger>
+			 		</Trigger>
+			 		<Action tye='none'>
+			 			<a1>redled = 1<a1/>
+			 			<a2>greenled = 0<a2/>
+			 		</Action>
+			 	</Topic>
+			 	<Topic name='safe' id=''>
+			 		<Trigger>
+			 		</Trigger>
+			 		<Action type='none' subscribe='device'>
+			 			<a1>redled = 0<a1/>
+			 			<a2>greenled = 1<a2/>
+			 		</Action>
+			 	</Topic>
+			 </Interface>
+		</Device>
+
+
+
+		<Device type='virtual' name='IntrusionDetector' id=''>
+			 <Properties>
+			 	<Signal type='virtual' mode='input' name='detectbrightlight'>
+			 		<Pin></Pin>
+			 	</Signal>
+			 	<Signal type='virtual' mode='input' name='detecthightemp'>
+			 		<Pin></Pin>
+			 	</Signal>
+				<Signal type='virtual' mode='output' name='alert'>
+			 		<Pin></Pin>
+			 	</Signal>
+			 </Properties>
+			 <Interface>
+			 	<Topic name='alert' id='' subscribe='device'>
+			 		<Trigger>
+			 			<condition>detectbrightlight | detecthightemp</condition>
+			 		</Trigger>
+			 		<Action type='none'>
+			 			<alert/>
+			 		</Action>
+			 	</Topic>
+			 	<Topic name='detectintrusion' id='' subscribe='app'>
+			 		<Trigger>
+			 			<condition>detectbrightlight | detecthightemp</condition>
+			 		</Trigger>
+			 		<Action type='bool'>
+			 			<output = true/>
+			 		</Action>
+			 	</Topic>
+			 </Interface>
+		</Device>
+	</Platform>
+</DDL>
