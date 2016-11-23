@@ -14,7 +14,7 @@ public class Xmlreader {
 
     try {
 
-	File file = new File("./ddl.xml");
+	File file = new File("./DDL_sample.xml");
   
 	DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance()
                              .newDocumentBuilder();
