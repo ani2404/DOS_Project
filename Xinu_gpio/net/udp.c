@@ -34,7 +34,6 @@ void	udp_in(
 	int32	i;			/* Index into udptab		*/
 	struct	udpentry *udptr;	/* Pointer to a udptab entry	*/
 
-
 	/* Ensure only one process can access the UDP table at a time	*/
 
 	mask = disable();
@@ -45,6 +44,10 @@ void	udp_in(
 			continue;
 	    }
 
+        dprintf("local port : %d \n",pktptr->net_udpdport);
+        dprintf("remote port: %d \n",pktptr->net_udpsport);
+	
+        dprintf("remote ip: %d \n",pktptr->net_ipsrc);
 	    if ((pktptr->net_udpdport == udptr->udlocport)  &&
                     ((udptr->udremport == 0) ||
                         (pktptr->net_udpsport == udptr->udremport)) &&

@@ -594,8 +594,21 @@ extern	syscall	yield(void);
 
 /* NETWORK BYTE ORDER CONVERSION NOT NEEDED ON A BIG-ENDIAN COMPUTER */
 #define	htons(x)   ( ( 0xff & ((x)>>8) ) | ( (0xff & (x)) << 8 ) )
+
+
 #define	htonl(x)   (  (((x)>>24) & 0x000000ff) | (((x)>> 8) & 0x0000ff00) | \
 		      (((x)<< 8) & 0x00ff0000) | (((x)<<24) & 0xff000000) )
+
+
 #define	ntohs(x)   ( ( 0xff & ((x)>>8) ) | ( (0xff & (x)) << 8 ) )
+
+
 #define	ntohl(x)   (  (((x)>>24) & 0x000000ff) | (((x)>> 8) & 0x0000ff00) | \
 		      (((x)<< 8) & 0x00ff0000) | (((x)<<24) & 0xff000000) )
+
+/*Debug print */
+#ifdef DEBUG
+#define dprintf kprintf
+#else
+#define dprintf //
+#endif

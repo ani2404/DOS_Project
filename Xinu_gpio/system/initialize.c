@@ -111,13 +111,16 @@ local process	startup(void)
 
 
 	/* Use DHCP to obtain an IP address and format it */
+	char ip_addr[256] = "192.168.0.50";
+	
 
-	ipaddr = getlocalip();
-	if ((int32)ipaddr == SYSERR) {
+	dot2ip(ip_addr,&ipaddr);
+	if (dot2ip(ip_addr,&ipaddr) == SYSERR) {
 		kprintf("Cannot obtain an IP address\n");
 	} else {
 		/* Print the IP in dotted decimal and hex */
-		ipaddr = NetData.ipucast;
+		NetData.ipvalid = TRUE;
+		NetData.ipucast = ipaddr;
 		sprintf(str, "%d.%d.%d.%d",
 			(ipaddr>>24)&0xff, (ipaddr>>16)&0xff,
 			(ipaddr>>8)&0xff,        ipaddr&0xff);

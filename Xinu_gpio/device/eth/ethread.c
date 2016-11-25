@@ -18,14 +18,17 @@ int32	ethread	(
 	struct	eth_a_rx_desc *prev;	/* Prev Rx desc pointer	*/
 	uint32	retval;			/* Num of bytes returned*/
 
+
 	ethptr = &ethertab[devptr->dvminor];
 
 	/* Get the pointer to Ethernet CSR */
 	csrptr = (struct eth_a_csreg *)ethptr->csr;
 
-	/* Wait for a packet */
-	wait(ethptr->isem);
 
+	/* Wait for a packet */
+	dprintf("semaphore for ethernet input %d \n",ethptr->isem);
+	wait(ethptr->isem);
+    dprintf("Woke up \n");
 	/* Get pointer to the descriptor */
 	rdescptr = (struct eth_a_rx_desc *)ethptr->rxRing +
 						ethptr->rxHead;
