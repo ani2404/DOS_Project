@@ -11,15 +11,16 @@
 			 		<Trigger>
 			 		</Trigger>
 			 		<Action type='int'>
-			 			<output = photoresistor*1.08/>
+						<output> photoresistor*1.08</output>
+						
 			 		</Action>
 			 	</Topic>
 			 	<Topic name='detectbrightlight' id='' subscribe='app'>
 			 		<Trigger>
-			 			<photoresistor greater than 5 />
+			 			<photoresistor> greater than 5 </photoresistor>
 			 		</Trigger>
 			 		<Action type='bool'>
-			 			<output = true/>
+			 			<output> true</output>
 			 		</Action>
 			 	</Topic>
 			 </Interface>
@@ -37,7 +38,7 @@
 			 		<Trigger>
 			 		</Trigger>
 			 		<Action type='int'>
-			 			<output = temperaturesensor*1.08/>
+			 			<output>  temperaturesensor*1.08</output>
 			 		</Action>
 			 	</Topic>
 			 	<Topic name='detecthightemp' id='' subscribe='app'>
@@ -45,7 +46,7 @@
 			 			<condition1>temperaturesensor*1.08 greater than 50 centrigrades </condition1>
 			 		</Trigger>
 			 		<Action type='bool'>
-			 			<output = true/>
+			 			<output> true</output>
 			 		</Action>
 			 	</Topic>
 			 </Interface>
@@ -68,25 +69,25 @@
 			 		<Trigger>
 			 		</Trigger>
 			 		<Action type='bool[3]'>
-			 			<a1>redled = bool[0]<a1/>
-			 			<a2>greenled = bool[1]<a2/>
-			 			<a3>blueled = bool[2] <a3/>
+			 			<a1>redled = bool[0]</a1>
+			 			<a2>greenled = bool[1]</a2>
+			 			<a3>blueled = bool[2] </a3>
 			 		</Action>
 			 	</Topic>
 			 	<Topic name='alert' id='' subscribe='device'>
 			 		<Trigger>
 			 		</Trigger>
 			 		<Action tye='none'>
-			 			<a1>redled = 1<a1/>
-			 			<a2>greenled = 0<a2/>
+			 			<a1>redled = 1</a1>
+			 			<a2>greenled = 0</a2>
 			 		</Action>
 			 	</Topic>
 			 	<Topic name='safe' id=''>
 			 		<Trigger>
 			 		</Trigger>
 			 		<Action type='none' subscribe='device'>
-			 			<a1>redled = 0<a1/>
-			 			<a2>greenled = 1<a2/>
+			 			<a1>redled = 0</a1>
+			 			<a2>greenled = 1</a2>
 			 		</Action>
 			 	</Topic>
 			 </Interface>
@@ -120,7 +121,7 @@
 			 			<condition>detectbrightlight | detecthightemp</condition>
 			 		</Trigger>
 			 		<Action type='bool'>
-			 			<output = true/>
+			 			<output>  true</output>
 			 		</Action>
 			 	</Topic>
 			 </Interface>
