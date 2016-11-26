@@ -1,91 +1,143 @@
 <DDL>
-	<Platform type ='beagleboard' id='1'>
-		<Device type='Physical' name='LightDetector' id=''>
+	<Platform>
+		<Type> beagleboard</Type>
+		
+		<Device>
+			<Type>Physical</Type> 
+			<Name>LightDetector</Name>
+			<Id>0</Id>
 			 <Properties>
-			 	<Signal type='analog' mode='input' name='photoresistor'>
+			 	<Signal>
+					<Type>analog</Type>
+					<Mode>input</Mode>
+					<Name>photoresistor</Name>
 			 		<Pin></Pin>
 			 	</Signal>
 			 </Properties>
 			 <Interface>
-			 	<Topic name='voltreading' id='' subscribe='app'>
+			 	<Topic> 
+					<Name>voltreading</Name> 
+					<Id>0</Id>
+					<NoOfArgs>1</NoOfArgs> 
+					<Type>subscribe</Type>
+					<Returnvalue>int</Returnvalue>
 			 		<Trigger>
 			 		</Trigger>
-			 		<Action type='int'>
-						<output> photoresistor*1.08</output>
+			 		<Action>
+						<Type>int</Type>
+						<Output> photoresistor*1.08</Output>
 						
 			 		</Action>
 			 	</Topic>
-			 	<Topic name='detectbrightlight' id='' subscribe='app'>
+				 
+				 
+			 	<Topic>
+					<Name>detectbrightlight</Name>
+					<Id>1</Id>
+					
 			 		<Trigger>
 			 			<photoresistor> greater than 5 </photoresistor>
 			 		</Trigger>
-			 		<Action type='bool'>
-			 			<output> true</output>
+			 		<Action>
+						<Type>bool</Type>
+			 			<Output> true</Output>
 			 		</Action>
 			 	</Topic>
 			 </Interface>
 		</Device>
 
 
-		<Device type='Physical' name='TemperatureDetector' id=''>
+		<Device>
+			<Type>Physical</Type>
+			<Name>TemperatureDetector</Name>
+			<Id>1</Id>
 			 <Properties>
-			 	<Signal type='analog' mode='input' name='temperaturesensor'>
+			 	<Signal>
+					<Type>analog</Type>
+					<Mode>input</Mode>
+					<Name>temperaturesensor</Name>
+					
 			 		<Pin></Pin>
 			 	</Signal>
 			 </Properties>
 			 <Interface>
-			 	<Topic name='centrigrade' id='' subscribe='app'>
-			 		<Trigger>
-			 		</Trigger>
-			 		<Action type='int'>
-			 			<output>  temperaturesensor*1.08</output>
+			 	<Topic> 
+					<Name>centrigrade</Name>
+					<Id></Id>
+					
+			 		<Action>
+						<Type>int</Type>
+			 			<Output>temperaturesensor*1.08</Output>
 			 		</Action>
 			 	</Topic>
-			 	<Topic name='detecthightemp' id='' subscribe='app'>
-			 		<Trigger>
-			 			<condition1>temperaturesensor*1.08 greater than 50 centrigrades </condition1>
-			 		</Trigger>
-			 		<Action type='bool'>
-			 			<output> true</output>
+			 	<Topic>
+					<Name> detecthightemp </Name>
+					<Id>0</Id>
+					<Action>
+						<Type>bool</Type>
+			 			<Output> true</Output>
 			 		</Action>
 			 	</Topic>
 			 </Interface>
 		</Device>
 
-		<Device type='Physical' name='WarningIndication' id=''>
+		<Device>
+			<Type>Physical</Type>
+			<Name>WarningIndication</Name>
+			<Id>2</Id>
 			 <Properties>
-			 	<Signal type='digital' mode='output' name='redled'>
+			 	<Signal>
+					<Type>digital</Type>
+					<Mode>output</Mode>
+					<Name>redled</Name>
 			 		<Pin></Pin>
 			 	</Signal>
-			 	<Signal type='digital' mode='output' name='blueled'>
+			 	<Signal>
+					<Type>digital</Type>
+					<Mode>output</Mode>
+					<Name>blueled</Name>
 			 		<Pin></Pin>
 			 	</Signal>
-				<Signal type='digital' mode='output' name='greenled'>
+				<Signal>
+					<Type>digital</Type>
+					<Mode>output</Mode>
+					<Name>greenled</Name>
 			 		<Pin></Pin>
 			 	</Signal>
 			 </Properties>
 			 <Interface>
-			 	<Topic name='default' id='' subscribe='device'>
+			 	<Topic>
+					<Name> default</Name>
+					<Id>0</Id>
+					
 			 		<Trigger>
 			 		</Trigger>
-			 		<Action type='bool[3]'>
+			 		<Action>
+						<Type>bool[3]</Type>
 			 			<a1>redled = bool[0]</a1>
 			 			<a2>greenled = bool[1]</a2>
 			 			<a3>blueled = bool[2] </a3>
 			 		</Action>
 			 	</Topic>
-			 	<Topic name='alert' id='' subscribe='device'>
+			 	<Topic> 
+					<Name>alert</Name>
+					<Id>1</Id>
+					
 			 		<Trigger>
 			 		</Trigger>
-			 		<Action tye='none'>
+			 		<Action>
+						<Type>none</Type>
 			 			<a1>redled = 1</a1>
 			 			<a2>greenled = 0</a2>
 			 		</Action>
 			 	</Topic>
-			 	<Topic name='safe' id=''>
+			 	<Topic>
+					<Name> safe</Name>
+					<Id>2</Id>
 			 		<Trigger>
 			 		</Trigger>
-			 		<Action type='none' subscribe='device'>
+			 		<Action>
+						<Type></Type>
 			 			<a1>redled = 0</a1>
 			 			<a2>greenled = 1</a2>
 			 		</Action>
@@ -95,32 +147,52 @@
 
 
 
-		<Device type='virtual' name='IntrusionDetector' id=''>
+		<Device>
+			<Type>virtual</Type>
+			<Name>IntrusionDetector</Name>
+			<Id>3</Id>
 			 <Properties>
-			 	<Signal type='virtual' mode='input' name='detectbrightlight'>
+			 	<Signal> 
+					<Type>virtual</Type>
+					<Mode> input</Mode>
+					<Name>detectbrightlight</Name>
 			 		<Pin></Pin>
 			 	</Signal>
-			 	<Signal type='virtual' mode='input' name='detecthightemp'>
+			 	<Signal>
+					<Type>virtual</Type>
+					<Mode>input</Mode>
+					<Name>detecthightemp</Name>
 			 		<Pin></Pin>
 			 	</Signal>
-				<Signal type='virtual' mode='output' name='alert'>
+				<Signal>
+					<Type> virtual</Type>
+					<Mode>output</Mode>
+					<Name>alert</Name>
 			 		<Pin></Pin>
 			 	</Signal>
 			 </Properties>
 			 <Interface>
-			 	<Topic name='alert' id='' subscribe='device'>
+			 	<Topic>
+					<Name>alert</Name>
+					<Id>0</Id>
+					<Subscribe>device</Subscribe>
 			 		<Trigger>
 			 			<condition>detectbrightlight | detecthightemp</condition>
 			 		</Trigger>
-			 		<Action type='none'>
+			 		<Action>
+						<Type>none</Type>
 			 			<alert/>
 			 		</Action>
 			 	</Topic>
-			 	<Topic name='detectintrusion' id='' subscribe='app'>
+			 	<Topic>
+					<Name>detectintrusion</Name>
+					<Id>1</Id>
+					<Subscribe>app</Subscribe>
 			 		<Trigger>
 			 			<condition>detectbrightlight | detecthightemp</condition>
 			 		</Trigger>
-			 		<Action type='bool'>
+			 		<Action> 
+						<Type> bool</Type>
 			 			<output>  true</output>
 			 		</Action>
 			 	</Topic>
