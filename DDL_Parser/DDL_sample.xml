@@ -1,152 +1,86 @@
 <DDL>
 	<Platform>
-		<Type> beagleboard</Type>
+		<Type>beagleboard</Type>
+		<Device>
+			<Properties>
+				<Type>Physical</Type> 
+				<Name>LED_r</Name>
+				<Id>0</Id>
+				
+			</Properties>
+			
+			<Interface>
+				<Pin>
+			 		<Topic> 
+						<Name>statusreading</Name> 
+						<Mode>in</Mode>
+						<Returnvalue>float</Returnvalue>	
+						<Output></Output>
+			 		</Topic>
+			 	    <Topic>
+						<Name>Changestatus</Name>
+			 			<Mode>out</Mode>
+						<Output></Output>
+					
+			 	    </Topic>
+				</Pin>
+			 </Interface>
+		</Device>
 		
 		<Device>
-			<Type>Physical</Type> 
-			<Name>LightDetector</Name>
-			<Id>0</Id>
-			 <Properties>
-			 	<Signal>
-					<Type>analog</Type>
-					<Mode>input</Mode>
-					<Name>photoresistor</Name>
-			 		<Pin></Pin>
-			 	</Signal>
-			 </Properties>
-			 <Interface>
-			 	<Topic> 
-					<Name>voltreading</Name> 
-					<Id>0</Id>
-					<NoOfArgs>1</NoOfArgs> 
-					<Type>subscribe</Type>
-					<Returnvalue>int</Returnvalue>
-			 		<Trigger>
-			 		</Trigger>
-			 		<Action>
-						<Type>int</Type>
-						<Output> photoresistor*1.08</Output>
-						
-			 		</Action>
-			 	</Topic>
-				 
-				 
-			 	<Topic>
-					<Name>detectbrightlight</Name>
-					<Id>1</Id>
+			<Properties>
+				<Type>Physical</Type> 
+				<Name>LED_g</Name>
+				<Id>1</Id>
+				<Type>Digital</Type>
+			</Properties>
+			
+			<Interface>
+			 	<Pin>
+			 		<Topic> 
+						<Name>statusreading</Name> 
+						<Mode>in</Mode>
+						<Returnvalue>float</Returnvalue>	
+						<Output></Output>
+			 		</Topic>
+			 	    <Topic>
+						<Name>Changestatus</Name>
+			 			<Mode>out</Mode>
+						<Output></Output>
 					
-			 		<Trigger>
-			 			<photoresistor> greater than 5 </photoresistor>
-			 		</Trigger>
-			 		<Action>
-						<Type>bool</Type>
-			 			<Output> true</Output>
-			 		</Action>
-			 	</Topic>
+			 	    </Topic>
+				</Pin>
 			 </Interface>
 		</Device>
-
-
+		
 		<Device>
-			<Type>Physical</Type>
-			<Name>TemperatureDetector</Name>
-			<Id>1</Id>
-			 <Properties>
-			 	<Signal>
-					<Type>analog</Type>
-					<Mode>input</Mode>
-					<Name>temperaturesensor</Name>
+			<Properties>
+				<Type>Physical</Type> 
+				<Name>LED_b</Name>
+				<Id>2</Id>
+				<Type>Digital</Type>
+			</Properties>
+			
+			<Interface>
+			 	<Pin>
+			 		<Topic> 
+						<Name>statusreading</Name> 
+						<Mode>in</Mode>
+						<Returnvalue>float</Returnvalue>	
+						<Output></Output>
+			 		</Topic>
+			 	    <Topic>
+						<Name>Changestatus</Name>
+			 			<Mode>out</Mode>
+						<Output></Output>
 					
-			 		<Pin></Pin>
-			 	</Signal>
-			 </Properties>
-			 <Interface>
-			 	<Topic> 
-					<Name>centrigrade</Name>
-					<Id></Id>
-					
-			 		<Action>
-						<Type>int</Type>
-			 			<Output>temperaturesensor*1.08</Output>
-			 		</Action>
-			 	</Topic>
-			 	<Topic>
-					<Name> detecthightemp </Name>
-					<Id>0</Id>
-					<Action>
-						<Type>bool</Type>
-			 			<Output> true</Output>
-			 		</Action>
-			 	</Topic>
+			 	    </Topic>
+				</Pin>
 			 </Interface>
 		</Device>
-
-		<Device>
-			<Type>Physical</Type>
-			<Name>WarningIndication</Name>
-			<Id>2</Id>
-			 <Properties>
-			 	<Signal>
-					<Type>digital</Type>
-					<Mode>output</Mode>
-					<Name>redled</Name>
-			 		<Pin></Pin>
-			 	</Signal>
-			 	<Signal>
-					<Type>digital</Type>
-					<Mode>output</Mode>
-					<Name>blueled</Name>
-			 		<Pin></Pin>
-			 	</Signal>
-				<Signal>
-					<Type>digital</Type>
-					<Mode>output</Mode>
-					<Name>greenled</Name>
-			 		<Pin></Pin>
-			 	</Signal>
-			 </Properties>
-			 <Interface>
-			 	<Topic>
-					<Name> default</Name>
-					<Id>0</Id>
-					
-			 		<Trigger>
-			 		</Trigger>
-			 		<Action>
-						<Type>bool[3]</Type>
-			 			<a1>redled = bool[0]</a1>
-			 			<a2>greenled = bool[1]</a2>
-			 			<a3>blueled = bool[2] </a3>
-			 		</Action>
-			 	</Topic>
-			 	<Topic> 
-					<Name>alert</Name>
-					<Id>1</Id>
-					
-			 		<Trigger>
-			 		</Trigger>
-			 		<Action>
-						<Type>none</Type>
-			 			<a1>redled = 1</a1>
-			 			<a2>greenled = 0</a2>
-			 		</Action>
-			 	</Topic>
-			 	<Topic>
-					<Name> safe</Name>
-					<Id>2</Id>
-			 		<Trigger>
-			 		</Trigger>
-			 		<Action>
-						<Type></Type>
-			 			<a1>redled = 0</a1>
-			 			<a2>greenled = 1</a2>
-			 		</Action>
-			 	</Topic>
-			 </Interface>
-		</Device>
-
-
-
+		
+		
+		
 		<Device>
 			<Type>virtual</Type>
 			<Name>IntrusionDetector</Name>
