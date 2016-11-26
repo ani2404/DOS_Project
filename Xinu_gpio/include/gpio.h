@@ -16,9 +16,8 @@
 #define GPIO_SETDATAOUT   0x194
 
 #define CONTROL_MODULE 0x44E10000
+#define GPI01_6        0x830
 #define GPI01_12        0x830
-#define GPI01_12        0x830
-#define 
 
 
 

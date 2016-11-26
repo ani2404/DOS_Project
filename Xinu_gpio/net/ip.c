@@ -84,6 +84,7 @@ void	ip_in(
 	if ( (pktptr->net_ipdst == NetData.ipucast) ||
 	     (pktptr->net_ipdst == NetData.ipbcast) ||
 	     (pktptr->net_ipdst == IP_BCAST)  ) {
+		dprintf("Received a packet \n");
 		ip_local(pktptr);
 		return;
 	} else {
@@ -192,14 +193,17 @@ void	ip_local(
 	switch (pktptr->net_ipproto) {
 
 	    case IP_UDP:
+	    dprintf("UDP PACKET \n");
 		udp_in(pktptr);
 		return;
 
 	    case IP_ICMP:
+	    dprintf("ICMP PACKET \n");
 		icmp_in(pktptr);
 		return;
 
 	    default:
+	    dprintf("WASTE PACKET \n");
 		freebuf((char *)pktptr);
 		return;
 	}
