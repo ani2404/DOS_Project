@@ -2,5 +2,11 @@
 compile/version
 compile/.defs
 compile/.vers_num
-config/config.c
-config.config.h
+config/conf.c
+config.conf.h
+compile/xinu
+compile/xinu.bin
+compile/xinu.elf
+compile/xinu.map
+system/conf.c
+system/conf.h
