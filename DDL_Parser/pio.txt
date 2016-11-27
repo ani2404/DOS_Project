@@ -1,0 +1,12 @@
+bool pread(int dev_id){
+	switch(dev_id){
+		#include <ddl_io_in.inc>
+		default: assert(false);		
+		}	
+	}
+bool pwrite(){	
+	switch(){	
+		#include <ddl_io_out.inc>
+		default: assert(false);
+		}
+	}
