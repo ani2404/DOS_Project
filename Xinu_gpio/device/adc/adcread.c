@@ -2,7 +2,6 @@
 
 
 extern sid32 readSem;
-extern bool8 enabled_steps[16];
 
 /**************************************************************************
 function name:  adcread
@@ -10,9 +9,7 @@ description:    Read function will enable ADC, then wait for semaphore which
                 which will be signaled by ADC interrupt. When semaphore is
                 got, read function can read the data.
 
-input:          devptr -------> base address of ADC register
-date:           11/11/2016
-author:         Kai Zhang				 
+input:          devptr -------> base address of ADC register				 
 **************************************************************************/
 devcall	adcread(uint8 pin,char* buff, int32 count)
 {
@@ -27,7 +24,7 @@ devcall	adcread(uint8 pin,char* buff, int32 count)
 		return SYSERR;
 	}
 
-	uint8 step = pin_map[1][pin-1] & 7;
+	uint8 step = (pin_map[1][pin-1] & 7)+1;
 	//kprintf("--------------ADC Read-------------\r\n");
 	struct adc_csreg* pReg = (struct adc_csreg*)0x44e0d000;
 
@@ -51,7 +48,7 @@ devcall	adcread(uint8 pin,char* buff, int32 count)
 	for(i = 0; i < sampleNum; i++)
 	{
 		data = pReg->fifoData0 &(0xFFF) ;
-		dprintf("data is 0x%x \n",data);
+		//dprintf("data is 0x%x \n",data);
 	}
 	buff[3] = (data&(0xff000000))>>24;
 	buff[2] = (data&(0x00ff0000))>>16;	

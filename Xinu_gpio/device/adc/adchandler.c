@@ -1,16 +1,13 @@
 #include <xinu.h>
 
 extern sid32 readSem;
-bool8 enabled_steps[16];
 
 /**************************************************************************
 function name:  adchandler
 description:    ADC Interrupt handler. Just clear the interrupt status, and 
                 then signal the semaphore to notify waiting read function.
 
-input:          xnum-------->IRQ number
-date:           11/11/2016
-author:         Kai Zhang				 
+input:          xnum-------->IRQ number				 
 **************************************************************************/
 void adchandler(uint32 xnum)
 {
@@ -24,8 +21,8 @@ void adchandler(uint32 xnum)
 	csrptr = (struct adc_csreg *) devptr->dvcsr;
 	irqStatus = csrptr->irqStatus;      // read interrupt status
 	csrptr->irqStatus = irqStatus;      // clear interrupt by write back
-
-	while(i++ < 16) {
+	dprintf("adc Handler called \n");
+	while(i++ < 17) {
 		if(enabled_steps[i]){
 			dprintf("disabling step %d \n",i);
 			ADCStepDisable(csrptr, i);

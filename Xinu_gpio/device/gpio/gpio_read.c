@@ -58,9 +58,9 @@ bool8 gpio_subscribe(uint8 exp, uint8 pin,handler h,bool8 on_rise) {
 		}
 
 		dprintf("Handler registering \n");
-    	handler_list *temp = (handler_list *)getmem(sizeof(handler_list));
+    		handler_list *temp = (handler_list *)getmem(sizeof(handler_list));
    		temp->h = h;
-    	temp->next = head;
+    		temp->next = head;
 		head = temp;
 
 		dprintf("Handler registered successfully \n");
@@ -74,29 +74,38 @@ bool8 gpio_subscribe(uint8 exp, uint8 pin,handler h,bool8 on_rise) {
 
 }
 
-/*
-bool8 gpio_unsubscribe(uint8 exp, uint8 pin,bool8 ) {
-	if(p != 0){
-	struct	gpio_csreg *csrptr = (struct gpio_csreg *)(((uint32)p) & (~0x1F));
 
-		 // Pin is 0 to 31
-	uint8 pin_no = (p & 0x1F);
+bool8 gpio_unsubscribe(uint8 exp, uint8 pin,handler h,bool8 on_rise) {
+	if(!isvalidpin(exp,pin)){
+		dprintf("Pin does not exist \n");
+		return FALSE;
+	}
+
+	if(pin_map[exp][pin] == 0){
+		return FALSE;
+	}
+
+	uint8 module_no = pin_map[exp][pin-1] >> 5;
+	gpio_csreg *csrptr = (gpio_csreg *)(module[module_no]);
+	// Pin is 0 to 31
+	uint8 pin_no = (pin_map[exp][pin-1] & 0x1F);
 
 	if(BIT_READ(csrptr->oe,pin_no)) {
+		handler_list *head = on_rise ? rising_list[module_no][pin_no] : falling_list[module_no][pin_no];
 
 		dprintf("Handler unsubscribing \n");
-    	handler_list *temp = rising_list[pin_no];
-    	handler_list *temp2 = temp;
+	    	handler_list *temp = head;
+    		handler_list *temp2 = temp;
     	
-    	while(temp!= NULL && (temp->h != h)){ temp2 = temp;
-    		temp = temp->next;}
+    		while(temp!= NULL && (temp->h != h)){ temp2 = temp;
+    			temp = temp->next;}
 
-    	if(temp2 != NULL && temp != NULL){
-    	temp2->next = temp->next;
-    	if(temp == rising_list[pin_no]) {rising_list[pin_no] = temp->next;}
-    	freemem((char*)temp,sizeof(handler_list));
-    	dprintf("Handler unregistered successfully \n");
-    	}
+    		if(temp2 != NULL && temp != NULL){
+    			temp2->next = temp->next;
+    			if(temp == head) {head = temp->next;}
+    			freemem((char*)temp,sizeof(handler_list));
+    			dprintf("Handler unregistered successfully \n");
+    		}
 	
 		// Do any clean operation if the handler list is empty
 	}
@@ -105,15 +114,9 @@ bool8 gpio_unsubscribe(uint8 exp, uint8 pin,bool8 ) {
 		dprintf("Cannot unsubsrcibe to output pin \n");
 		return FALSE;
 	}
-}
-else
-{
-	dprintf("Pin does not exist \n");
-	return FALSE;
-}
 
 	return TRUE;
 
 
 
-} */
+}

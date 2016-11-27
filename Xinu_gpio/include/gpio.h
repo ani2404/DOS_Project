@@ -101,7 +101,7 @@ void gpio_handler_mod2(void);
 void gpio_handler_mod3(void);
 bool8 gpio_read(uint8,uint8);
 bool8 gpio_subscribe(uint8,uint8,handler,bool8);
-//bool8 gpio_subscribe_low(uint8,uint8, handler);
+bool8 gpio_subscribe(uint8,uint8, handler,bool8);
 bool8 gpio_write(uint8,uint8,bool8);
 void control_module_init(gpio_module module);
 void gpio_module_init(gpio_module module);

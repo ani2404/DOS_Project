@@ -9,7 +9,7 @@ chapter 12 -------- Touch screen controller
 #include <xinu.h>
 
 sid32 readSem;			// Read semaphore
-bool8 enabled_steps[16];
+bool8 enabled_steps[17];
 
 
 //just want to trace all the register I care about
