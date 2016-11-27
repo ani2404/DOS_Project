@@ -80,13 +80,14 @@ bool8 gpio_unsubscribe_high(uint32 p,handler h) {
 
 		dprintf("Handler unsubscribing \n");
     	handler_list *temp = rising_list[pin_no];
-    	handler_list *temp2 = NULL;
+    	handler_list *temp2 = temp;
     	
     	while(temp!= NULL && (temp->h != h)){ temp2 = temp;
     		temp = temp->next;}
 
     	if(temp2 != NULL && temp != NULL){
     	temp2->next = temp->next;
+    	if(temp == rising_list[pin_no]) {rising_list[pin_no] = temp->next;}
     	freemem((char*)temp,sizeof(handler_list));
     	dprintf("Handler unregistered successfully \n");
     	}
@@ -166,13 +167,14 @@ bool8 gpio_unsubscribe_low(uint32 p,handler h) {
 
 		dprintf("Handler unsubscribing \n");
     	handler_list *temp = falling_list[pin_no];
-    	handler_list *temp2 = NULL;
+    	handler_list *temp2 = temp;
     	
     	while(temp!= NULL && (temp->h != h)){ temp2 = temp;
     		temp = temp->next;}
 
     	if(temp2 != NULL && temp != NULL){
     	temp2->next = temp->next;
+    	if(temp == rising_list[pin_no]) {rising_list[pin_no] = temp->next;}
     	freemem((char*)temp,sizeof(handler_list));
     	dprintf("Handler unregistered successfully \n");
     	}
