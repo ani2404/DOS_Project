@@ -607,6 +607,7 @@ extern	syscall	yield(void);
 		      (((x)<< 8) & 0x00ff0000) | (((x)<<24) & 0xff000000) )
 
 /*Debug print */
+#define DEBUG
 #ifdef DEBUG
 #define dprintf kprintf
 #else
