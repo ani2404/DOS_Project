@@ -44,6 +44,8 @@ devcall	adcread(uint8 pin, char* buff, int32 count);
 devcall	adcinit (struct	dentry *devptr);
 void adchandler(uint32 xnum);
 
+extern bool8 enabled_steps[];
+
 #define ADC_ADDR					(0x44E0D000)
 
 

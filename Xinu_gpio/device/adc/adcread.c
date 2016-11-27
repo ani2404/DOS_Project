@@ -2,6 +2,7 @@
 
 
 extern sid32 readSem;
+extern bool8 enabled_steps[16];
 
 /**************************************************************************
 function name:  adcread
@@ -33,7 +34,9 @@ devcall	adcread(uint8 pin,char* buff, int32 count)
 	//I use ADC with continuous mode, and in the interrupt handler, the step module
 	//will be disable.Thus everytime when user want to read the ADC, this function will
 	//enable the step module.
+	dprintf("Enabling step %d\n",step);
 	ADCStepEnable(pReg,step);
+	enabled_steps[step] = TRUE;
 
 	//wait for semaphore signaled by interrupt handler.
 	wait(readSem);
@@ -44,9 +47,11 @@ devcall	adcread(uint8 pin,char* buff, int32 count)
 	// unsigned int decimal = 0;
 	int sampleNum = pReg->fifoInfo[0].fifoCount;
 	int i;
+	dprintf("Total no of samples %d\n",sampleNum);
 	for(i = 0; i < sampleNum; i++)
 	{
 		data = pReg->fifoData0 &(0xFFF) ;
+		dprintf("data is 0x%x \n",data);
 	}
 	buff[3] = (data&(0xff000000))>>24;
 	buff[2] = (data&(0x00ff0000))>>16;	
