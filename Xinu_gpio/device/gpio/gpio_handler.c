@@ -10,7 +10,13 @@ void gpio_handler(void)
 	dprintf("irq_status_raw0 address is 0x%x \n",&csrptr->irq_status_raw0);
 	while(BIT_READ(csrptr->irq_status_raw0,pin) == 0){pin++;}
 
-	temp = pins[pin];
+	if(BIT_READ(csrptr->risingdetect,pin) == 1){
+		temp = rising_list[pin];
+	}
+	else
+	{
+		temp = falling_list[pin];
+	}
 
 	while(temp != NULL)
 	{
@@ -36,7 +42,7 @@ void gpio_handler1(void)
 	dprintf("irq_status_raw1 address is 0x%x \n",&csrptr->irq_status_raw1);
 	while(BIT_READ(csrptr->irq_status_raw1,pin) == 0){pin++;}
 
-	temp = pins[pin];
+	temp = rising_list[pin];
 
 	while(temp != NULL)
 	{

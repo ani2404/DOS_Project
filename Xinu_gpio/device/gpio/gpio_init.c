@@ -1,6 +1,7 @@
 #include <xinu.h>
 
-handler_list* pins[32];
+handler_list* rising_list[32];
+handler_list* falling_list[32];
 
 const uint32 pin[][47] ={ 
 
@@ -88,7 +89,7 @@ void gpio_module_init(gpio_module module) {
 	dprintf("GPIO_SYSSTATUS Register content %d",BIT_READ(csrptr->sys_status,0));
 
 	for(i=0;i<32;i++){
-		pins[i] = NULL;
+		rising_list[i] = NULL;
 	}
 }
 

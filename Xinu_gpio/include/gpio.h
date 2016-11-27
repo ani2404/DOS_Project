@@ -74,7 +74,8 @@ typedef struct handler_list
 	struct handler_list *next;
 }handler_list;
 
-extern handler_list* pins[];
+extern handler_list* rising_list[];
+extern handler_list* falling_list[];
 extern const uint32 pin[][47];
 extern const uint32 control_module[][32];
 
