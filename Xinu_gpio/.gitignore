@@ -1,1 +1,6 @@
-
+*.o
+compile/version
+compile/.defs
+compile/.vers_num
+config/config.c
+config.config.h
