@@ -1,12 +1,20 @@
 #include <xinu.h>
 
-bool8 gpio_write(uint32 p,bool8 data) {
-	if(p != 0){
-	struct	gpio_csreg *csrptr = (struct gpio_csreg *)(((uint32)p) & (~0x1F));
-	dprintf("Accessing register in write: 0x%x \n",csrptr);
+bool8 gpio_write(uint8 exp, uint8 pin,bool8 data) {
+	if(!isvalidpin(exp,pin)){
+		dprintf("Pin does not exist \n");
+		return FALSE;
+	}
 
-    // Pin is 0 to 31
-	uint8 pin_no = (p & 0x1F);
+	if(pin_map[exp][pin] == 0){
+		return FALSE;
+	}
+
+
+	uint8 module_no = pin_map[exp][pin-1] >> 5;
+	gpio_csreg *csrptr = (gpio_csreg *)(module[module_no]);
+	// Pin is 0 to 31
+	uint8 pin_no = (pin_map[exp][pin-1] & 0x1F);
 
     if(BIT_READ(csrptr->oe,pin_no) == 0) {
 	dprintf("dataout address is 0x%x \n",&csrptr->dataout);
@@ -24,12 +32,5 @@ bool8 gpio_write(uint32 p,bool8 data) {
 		dprintf("Cannot write to the pin %d\n",pin_no);
 		return FALSE;
 	}
-}
-else
-{
-	dprintf("Pin does not exist \n");
-	return FALSE;
-}
-
 	return TRUE;
 }

@@ -34,7 +34,8 @@ REBUILDFLAGS	=	-s $(TOPDIR)/system  debug.c 	\
 			-s $(TOPDIR)/device/tty			\
 			-s $(TOPDIR)/device/nam			\
 			-s $(TOPDIR)/device/eth			\
-			-s $(TOPDIR)/device/gpio			\
+			-s $(TOPDIR)/device/gpio		\
+			-s $(TOPDIR)/device/adc		\
 			-s $(TOPDIR)/device/rds			\
 			-s $(TOPDIR)/device/ram			\
 			-s $(TOPDIR)/device/lfs			\

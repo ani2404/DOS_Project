@@ -51,29 +51,31 @@ process edge_data(void)
 
 	return OK;
 }
-
+/*
 void button(void)
 {
 	static bool8 data = FALSE;
 	data = !data;
-	gpio_write(pin[0][5],data);
+
+	gpio_write(0,5,data);
 }
+*/
 process main()
 {
-	int16 i=0;
+	/*int16 i=0;
 	gpio_init();
 	
-	gpio_set_mode(pin[0][3],1);
-	gpio_subscribe_high(pin[0][3],button);
+	gpio_set_mode(0,3,1);
+	gpio_subscribe(0,3,button,TRUE);
 	for (i=1;i<47;i++)
 	{
 	if(i != 3) {
-	gpio_set_mode(pin[0][i],0);
-	gpio_set_mode(pin[1][i],0);
+	gpio_set_mode(0,i,0);
+	gpio_set_mode(0,i,0);
 	}	
-	gpio_write(pin[0][i],1);
-	gpio_write(pin[1][i],1);
+	gpio_write(0,i,1);
+	gpio_write(0,i,1);*/
 	
-}
+
 }
 	

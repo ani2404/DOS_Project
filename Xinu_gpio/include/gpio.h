@@ -6,6 +6,7 @@
 #define CONTROL_MODULE_BASE 0x44E10000
 
 #define NUM_GPIO_MODULES 4
+#define PINS_PER_MODULE 32
 
 //namespace A{}
 typedef enum gpio_module {
@@ -14,8 +15,6 @@ module1 = 0x4804C000,
 module2 = 0x481AC000,
 module3 = 0x481AE000
 }gpio_module;
-
-static const gpio_module module[] = {module0, module1,module2,module3 };
 
 
 #define GPIO_WRITE 0
@@ -33,7 +32,7 @@ static const gpio_module module[] = {module0, module1,module2,module3 };
 #define INTC_GPIO_3B 63
 
 
-struct gpio_csreg {
+typedef struct gpio_csreg {
 	uint32	revision;
 	uint32	res1[3];
 	uint32	sys_config;
@@ -65,7 +64,7 @@ struct gpio_csreg {
 	uint32  res5[14];
 	uint32  clear_data_out;
 	uint32  set_data_out;
-};
+}gpio_csreg;
 
 typedef void (* handler) (void);
 typedef struct handler_list
@@ -74,10 +73,11 @@ typedef struct handler_list
 	struct handler_list *next;
 }handler_list;
 
-extern handler_list* rising_list[];
-extern handler_list* falling_list[];
-extern const uint32 pin[][47];
+extern handler_list* rising_list[][32];
+extern handler_list* falling_list[][32];
+extern const uint32 pin_map[][46];
 extern const uint32 control_module[][32];
+extern const gpio_module module[];
 
 
 #define	MM_WRITE(addr,val)	(*((uint32 *)(addr))) = (val)
@@ -88,15 +88,23 @@ extern const uint32 control_module[][32];
 #define BIT_READ(val,bit)    ((val >> bit) & 1)
 
 
+#define NUM_EXPANSION_HEADERS 2
+#define PINS_PER_HEADER 46
+#define isvalidpin(exp,pin) ((exp < NUM_EXPANSION_HEADERS) && (pin > 0) && (pin < PINS_PER_HEADER))
+
+/* Function declarations */
 void gpio_init();
-void gpio_handler(void);
-void gpio_handler1(void);
-bool8 gpio_read(uint32 pin);
-bool8 gpio_subscribe_high(uint32 pin,handler h);
-bool8 gpio_subscribe_low(uint32 pin, handler h);
-bool8 gpio_write(uint32 pin,bool8 data);
+void gpio_handler(uint8);
+void gpio_handler_mod0(void);
+void gpio_handler_mod1(void);
+void gpio_handler_mod2(void);
+void gpio_handler_mod3(void);
+bool8 gpio_read(uint8,uint8);
+bool8 gpio_subscribe(uint8,uint8,handler,bool8);
+//bool8 gpio_subscribe_low(uint8,uint8, handler);
+bool8 gpio_write(uint8,uint8,bool8);
 void control_module_init(gpio_module module);
 void gpio_module_init(gpio_module module);
-bool8 gpio_set_mode(uint32 p,bool8 data);
+bool8 gpio_set_mode(uint8,uint8,bool8);
 
 
