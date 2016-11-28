@@ -1,6 +1,28 @@
 /*  main.c  - main */
 
 #include <xinu.h>
+
+uint16 my_getnbr(char *str)
+{
+  uint16           result;
+  uint16           puiss;
+
+  result = 0;
+  puiss = 1;
+  while (('-' == (*str)) || ((*str) == '+'))
+    {
+      if (*str == '-')
+        puiss = puiss * -1;
+      str++;
+    }
+  while ((*str >= '0') && (*str <= '9'))
+    {
+      result = (result * 10) + ((*str) - '0');
+      str++;
+    }
+  return (result * puiss);
+}
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------
 process main(void)
 {
@@ -79,13 +101,11 @@ process main(void)
    for (k = 0; k < ptrIndex; ++k){
       printf("%s \n", ptr[k]);
    }
-	switch(ptr[0]){
 
-	case 'gpio_write': gpio_write(ptr[1],ptr[2],ptr[3]);
-	default:
+	if(strncmp("gpio_write",ptr[0],strlen(ptr[0]))==0)
+	 gpio_write(my_getnbr(ptr[1]),my_getnbr(ptr[2]),my_getnbr(ptr[3]));
+	else
 	printf("unknown function name");
-
-	}
  
   freemem((char*)ptr,sizeof(char*)*(spcCount+2));
 // =======================================================================================================================
