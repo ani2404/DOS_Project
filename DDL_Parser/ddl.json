@@ -14,12 +14,14 @@
             "Topic": [
                 {
                   "Name": "statusreading",
+				  "Id":"0",
                   "Mode": "in",
                   "Returnvalue": "float"
                 },
                 {
                   "Name": "Changestatus",
-                  "Mode": "out"
+                  "Mode": "out",
+					"Id":"1"
                 }
               ]
             }
@@ -39,11 +41,13 @@
               "Topic": [
                 {
                   "Name": "statusreading",
+					"Id":"0",
                   "Mode": "in",
                   "Returnvalue": "float"
                 },
                 {
                   "Name": "Changestatus",
+					"Id":"1",
                   "Mode": "out"
                 }
               ]
@@ -64,11 +68,13 @@
               "Topic": [
                 {
                   "Name": "statusreading",
+					"Id":"0",
                   "Mode": "in",
                   "Returnvalue": "float"
                 },
                 {
                   "Name": "Changestatus",
+					"Id":"1",
                   "Mode": "out"
                 }
               ]
