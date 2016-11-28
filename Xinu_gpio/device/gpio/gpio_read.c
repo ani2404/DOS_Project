@@ -25,7 +25,7 @@ bool8 gpio_read(uint8 exp,uint8 pin) {
 	else {
 		
 			return BIT_READ(csrptr->dataout,pin_no);
-		}
+	}
 	
 }
 
