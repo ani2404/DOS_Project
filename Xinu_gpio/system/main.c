@@ -2,6 +2,7 @@
 
 #include <xinu.h>
 
+static int16 count=0;
 process edge_data(void)
 {
 	uid32	slot;			/* Slot in UDP table		*/
@@ -51,31 +52,84 @@ process edge_data(void)
 
 	return OK;
 }
-/*
-void button(void)
+
+void LED_g(void)
 {
 	static bool8 data = FALSE;
 	data = !data;
-
 	gpio_write(0,5,data);
 }
-*/
+void LED_r(void)
+{
+	static bool8 data = TRUE;
+	data = !data;
+	gpio_write(0,12,data);
+		
+}
+
+void buzzer(void)
+{
+	static bool8 data = FALSE;
+	
+	
+	data = !data;
+	gpio_write(0,14,data);
+	count++;
+	//kprintf("third subscriber \n");
+}
+
 process main()
 {
-	/*int16 i=0;
+	
+	int16 i=0;
 	gpio_init();
 	
 	gpio_set_mode(0,3,1);
-	gpio_subscribe(0,3,button,TRUE);
+	gpio_subscribe(0,3,LED_g,TRUE);
+	gpio_subscribe(0,3,LED_r,TRUE);
+	gpio_subscribe(0,3,buzzer,TRUE);
 	for (i=1;i<47;i++)
 	{
 	if(i != 3) {
 	gpio_set_mode(0,i,0);
-	gpio_set_mode(0,i,0);
+	gpio_set_mode(1,i,0);
 	}	
 	gpio_write(0,i,1);
-	gpio_write(0,i,1);*/
+	gpio_write(1,i,1);
+	
+	}
+	kprintf("In main after for loops\n");
+	while(1)
+	{
+		kprintf("");
+		if(count>=3){
+		kprintf("In unsubscribe\n");
+		gpio_write(0,14,FALSE);
+		gpio_unsubscribe(0,3,buzzer,TRUE);
+			break;
+		}
+	
+	
+	
+	//analog read
+//	kprintf("Start analog read\r\n");
+	char data[4];
+	unsigned int integer = 0;
+	unsigned int decimal = 0;
+	float voltage,temp_c;
+	
+		//adcread(39,(char*)data,4);
+		unsigned int vol = *(unsigned int*)data;
+		voltage = (vol*1.8/4095)*1000;
+		temp_c = (voltage - 500) / 10;
+		integer = (unsigned int)temp_c;
+		decimal = (unsigned int)((temp_c - integer)*10);
+		//kprintf("Voltage = %d mv\r\n",voltage);
+		//kprintf("Centigrade = %d.%d  mv\r\n",integer,decimal);
+		sleep(3);
+	}
+	
+}
+
 	
 
-}
-	

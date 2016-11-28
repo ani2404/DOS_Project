@@ -90,7 +90,7 @@ extern const gpio_module module[];
 
 #define NUM_EXPANSION_HEADERS 2
 #define PINS_PER_HEADER 46
-#define isvalidpin(exp,pin) ((exp < NUM_EXPANSION_HEADERS) && (pin > 0) && (pin < PINS_PER_HEADER))
+#define isvalidpin(exp,pin) ((exp < NUM_EXPANSION_HEADERS) && (pin > 0) && (pin <= PINS_PER_HEADER))
 
 /* Function declarations */
 void gpio_init();
@@ -101,7 +101,7 @@ void gpio_handler_mod2(void);
 void gpio_handler_mod3(void);
 bool8 gpio_read(uint8,uint8);
 bool8 gpio_subscribe(uint8,uint8,handler,bool8);
-bool8 gpio_subscribe(uint8,uint8, handler,bool8);
+bool8 gpio_unsubscribe(uint8,uint8, handler,bool8);
 bool8 gpio_write(uint8,uint8,bool8);
 void control_module_init(gpio_module module);
 void gpio_module_init(gpio_module module);

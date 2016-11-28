@@ -6,7 +6,7 @@ bool8 gpio_write(uint8 exp, uint8 pin,bool8 data) {
 		return FALSE;
 	}
 
-	if(pin_map[exp][pin] == 0){
+	if(pin_map[exp][pin-1] == 0){
 		return FALSE;
 	}
 

@@ -6,7 +6,7 @@ bool8 gpio_read(uint8 exp,uint8 pin) {
 		return FALSE;
 	}
 
-	if(pin_map[exp][pin] == 0){
+	if(pin_map[exp][pin-1] == 0){
 		return FALSE;
 	}
 
@@ -35,7 +35,7 @@ bool8 gpio_subscribe(uint8 exp, uint8 pin,handler h,bool8 on_rise) {
 		return FALSE;
 	}
 
-	if(pin_map[exp][pin] == 0){
+	if(pin_map[exp][pin-1] == 0){
 		return FALSE;
 	}
 
@@ -45,9 +45,9 @@ bool8 gpio_subscribe(uint8 exp, uint8 pin,handler h,bool8 on_rise) {
 	uint8 pin_no = (pin_map[exp][pin-1] & 0x1F);
 
 	if(BIT_READ(csrptr->oe,pin_no)) {
-		handler_list *head = on_rise ? rising_list[module_no][pin_no] : falling_list[module_no][pin_no];
+		handler_list **head = on_rise ? &rising_list[module_no][pin_no] : &falling_list[module_no][pin_no];
 		uint32 *enable_interrupt_addr = on_rise ? &csrptr->risingdetect : &csrptr->fallingdetect;
-		if(head == NULL){
+		if(*head == NULL){
 			dprintf("risingdetect address is 0x%x \n",enable_interrupt_addr);
 			BIT_SET(*enable_interrupt_addr,pin_no);
 			dprintf("irq_status_set0 address is 0x%x \n",&csrptr->irq_status_set0);
@@ -60,8 +60,8 @@ bool8 gpio_subscribe(uint8 exp, uint8 pin,handler h,bool8 on_rise) {
 		dprintf("Handler registering \n");
     		handler_list *temp = (handler_list *)getmem(sizeof(handler_list));
    		temp->h = h;
-    		temp->next = head;
-		head = temp;
+    		temp->next = *head;
+		*head = temp;
 
 		dprintf("Handler registered successfully \n");
 	}
@@ -81,7 +81,7 @@ bool8 gpio_unsubscribe(uint8 exp, uint8 pin,handler h,bool8 on_rise) {
 		return FALSE;
 	}
 
-	if(pin_map[exp][pin] == 0){
+	if(pin_map[exp][pin-1] == 0){
 		return FALSE;
 	}
 
@@ -91,10 +91,10 @@ bool8 gpio_unsubscribe(uint8 exp, uint8 pin,handler h,bool8 on_rise) {
 	uint8 pin_no = (pin_map[exp][pin-1] & 0x1F);
 
 	if(BIT_READ(csrptr->oe,pin_no)) {
-		handler_list *head = on_rise ? rising_list[module_no][pin_no] : falling_list[module_no][pin_no];
+		handler_list **head = on_rise ? &rising_list[module_no][pin_no] : &falling_list[module_no][pin_no];
 
 		dprintf("Handler unsubscribing \n");
-	    	handler_list *temp = head;
+	    	handler_list *temp = *head;
     		handler_list *temp2 = temp;
     	
     		while(temp!= NULL && (temp->h != h)){ temp2 = temp;
@@ -102,7 +102,7 @@ bool8 gpio_unsubscribe(uint8 exp, uint8 pin,handler h,bool8 on_rise) {
 
     		if(temp2 != NULL && temp != NULL){
     			temp2->next = temp->next;
-    			if(temp == head) {head = temp->next;}
+    			if(temp == *head) {*head = temp->next;}
     			freemem((char*)temp,sizeof(handler_list));
     			dprintf("Handler unregistered successfully \n");
     		}
