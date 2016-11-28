@@ -10,6 +10,4 @@ compile/xinu.elf
 compile/xinu.map
 system/conf.c
 system/conf.h
-config/lex.yy.c
-config/y.tab.c
 
