@@ -80,7 +80,7 @@ void	nulluser()
 
 	/* Initialize the network stack and start processes */
 
-	//net_init();
+	net_init();
 
 	/* Create a process to finish startup and start main */
 
@@ -221,6 +221,8 @@ static	void	sysinit()
 	for (i = 0; i < NDEVS; i++) {
 		init(i);
 	}
+
+	gpio_init();
 	return;
 }
 
