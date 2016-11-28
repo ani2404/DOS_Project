@@ -1,0 +1,127 @@
+{
+  "DDL": {
+    "Platform": {
+      "Type": "beagleboard",
+      "Device": [
+        {
+          "Properties": {
+            "Type": "Physical",
+            "Name": "LED_r",
+            "Id": "0"
+          },
+          "Interface": {
+            "Pin": {
+            "Topic": [
+                {
+                  "Name": "statusreading",
+                  "Mode": "in",
+                  "Returnvalue": "float"
+                },
+                {
+                  "Name": "Changestatus",
+                  "Mode": "out"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Properties": {
+            "Type": [
+              "Physical",
+              "Digital"
+            ],
+            "Name": "LED_g",
+            "Id": "1"
+          },
+          "Interface": {
+            "Pin": {
+              "Topic": [
+                {
+                  "Name": "statusreading",
+                  "Mode": "in",
+                  "Returnvalue": "float"
+                },
+                {
+                  "Name": "Changestatus",
+                  "Mode": "out"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Properties": {
+            "Type": [
+              "Physical",
+              "Digital"
+            ],
+            "Name": "LED_b",
+            "Id": "2"
+          },
+          "Interface": {
+            "Pin": {
+              "Topic": [
+                {
+                  "Name": "statusreading",
+                  "Mode": "in",
+                  "Returnvalue": "float"
+                },
+                {
+                  "Name": "Changestatus",
+                  "Mode": "out"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "Type": "virtual",
+          "Name": "IntrusionDetector",
+          "Id": "3",
+          "Properties": {
+			  "Name": "detectbrightlig",
+            "Signal": [
+              {
+                "Type": "virtual",
+                "Mode": " input",
+                "Name": "detectbrightlight"
+              },
+              {
+                "Type": "virtual",
+                "Mode": "input",
+                "Name": "detecthightemp"
+              },
+              {
+                "Type": " virtual",
+                "Mode": "output",
+                "Name": "alert"
+              }
+            ]
+          },
+          "Interface": {
+            "Topic": [
+              {
+                "Name": "alert",
+                "Id": "0",
+                "Subscribe": "device",
+                "Trigger": { "condition": "detectbrightlight | detecthightemp" },
+                "Action": { "Type": "none" }
+              },
+              {
+                "Name": "detectintrusion",
+                "Id": "1",
+                "Subscribe": "app",
+                "Trigger": { "condition": "detectbrightlight | detecthightemp" },
+                "Action": {
+                  "Type": " bool",
+                  "output": "  true"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
