@@ -3,7 +3,7 @@ compile/version
 compile/.defs
 compile/.vers_num
 config/conf.c
-config.conf.h
+config/conf.h
 compile/xinu
 compile/xinu.bin
 compile/xinu.elf
